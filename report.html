@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aurogi – Report Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f9f9;
+      margin: 0;
+      text-align: center;
+    }
+    header {
+      background: #0a7c6b;
+      color: white;
+      padding: 25px;
+    }
+    .box {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="file"] {
+      margin: 20px 0;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      background: #0a7c6b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #065f52;
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Upload Medical Report</h1>
+  <p>Aurogi AI Health Platform</p>
+</header>
+
+<div class="box">
+  <h3>Select Your Report</h3>
+  <input type="file" accept=".pdf,.jpg,.png">
+  <br>
+  <button disabled>Analyze Report (Coming Soon)</button>
+  <p class="note">
+    Supported formats: PDF, JPG, PNG  
+    <br>AI analysis feature coming soon.
+  </p>
+</div>
+
+</body>
+</html>

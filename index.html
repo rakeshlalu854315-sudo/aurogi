@@ -29,14 +29,16 @@ header{
   justify-content:space-between;
   align-items:center;
 }
+.logo{
+  font-size:22px;
+  font-weight:600;
+  color:#0d6efd;
+}
 .nav a{
   text-decoration:none;
   color:#333;
   margin-left:20px;
   font-weight:500;
-}
-.logo img{
-  height:40px;
 }
 
 /* HERO */
@@ -48,9 +50,7 @@ header{
   align-items:center;
   gap:40px;
 }
-.hero-text{
-  flex:1;
-}
+.hero-text{flex:1}
 .hero-text h1{
   font-size:42px;
   margin-bottom:15px;
@@ -74,12 +74,37 @@ header{
   border:2px solid #0d6efd;
   margin-left:10px;
 }
-.hero-img{
-  flex:1;
-}
+.hero-img{flex:1}
 .hero-img img{
   width:100%;
   border-radius:10px;
+}
+
+/* SERVICES STRIP */
+.services-strip{
+  background:#0d6efd;
+  padding:40px 15px;
+}
+.services{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+}
+.service-box{
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+.service-box h3{
+  margin:10px 0 5px;
+}
+.service-box p{
+  font-size:14px;
+  color:#666;
 }
 
 /* SECTIONS */
@@ -99,54 +124,46 @@ section{
 footer{
   background:#111;
   color:#aaa;
+  padding:40px 15px;
 }
-.footer-wrap{
+.footer-grid{
   max-width:1200px;
   margin:auto;
-  padding:40px 15px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
 }
-footer h4{
-  color:#fff;
-}
-footer ul{
-  list-style:none;
-  padding:0;
-}
-footer li{
-  margin-bottom:8px;
-}
+footer h4{color:#fff}
 footer a{
   color:#aaa;
   text-decoration:none;
-}
-footer a:hover{
-  color:#0d6efd;
+  display:block;
+  margin:5px 0;
 }
 .footer-bottom{
   text-align:center;
-  padding:15px;
-  border-top:1px solid #333;
+  margin-top:20px;
+  font-size:14px;
 }
 
-/* MOBILE MODE */
+/* MOBILE */
 @media(max-width:768px){
   .hero{
     flex-direction:column-reverse;
     text-align:center;
   }
-  .hero-text h1{
-    font-size:30px;
-  }
+  .hero-text h1{font-size:30px}
   .btn-outline{
     margin-left:0;
     margin-top:10px;
     display:block;
   }
-  .nav-links{
-    display:none;
+  .services{
+    grid-template-columns:1fr;
+  }
+  .footer-grid{
+    grid-template-columns:1fr;
+    text-align:center;
   }
 }
 </style>
@@ -156,80 +173,55 @@ footer a:hover{
 
 <header>
   <div class="nav">
-    <div class="logo">
-      <img src="logo.png" alt="Aurogi Logo">
-    </div>
-    <div class="nav-links">
+    <div class="logo">AUROGI</div>
+    <div>
       <a href="#home">Home</a>
       <a href="#about">About</a>
-      <a href="#report-analysis">Report Analysis</a>
+      <a href="#report">Report Analysis</a>
       <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
 </header>
 
+<!-- HERO -->
 <div class="hero" id="home">
   <div class="hero-text">
     <h1>Making Health Care Better Together</h1>
-    <p>
-      Trusted medical guidance, report analysis and health awareness
-      for everyone.
-    </p>
-    <a href="#report-analysis" class="btn">Report Analysis</a>
+    <p>Medical report analysis, health awareness and trusted guidance for everyone.</p>
+    <a href="#report" class="btn">Report Analysis</a>
     <a href="#about" class="btn btn-outline">About Us</a>
   </div>
-
   <div class="hero-img">
     <img src="https://images.unsplash.com/photo-1606813909359-6b3c86c2aa87">
   </div>
 </div>
 
+<!-- SERVICES -->
+<div class="services-strip">
+  <div class="services">
+    <div class="service-box">
+      <h3>Primary Care</h3>
+      <p>Basic health advice & prevention</p>
+    </div>
+    <div class="service-box">
+      <h3>Emergency Awareness</h3>
+      <p>Immediate response knowledge</p>
+    </div>
+    <div class="service-box">
+      <h3>Online Consultation</h3>
+      <p>Remote medical guidance</p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
 <section id="about">
   <div class="card">
     <h2>About Aurogi</h2>
-    <p>
-      Aurogi helps people understand medical reports, health problems,
-      and preventive care in simple language.
-    </p>
+    <p>Aurogi simplifies medical reports and spreads health awareness in easy language.</p>
   </div>
 </section>
 
-<section id="report-analysis">
-  <div class="card">
-    <h2>Report Analysis</h2>
-    <p>
-      Blood reports, medical tests and health reports explained
-      in simple language.
-    </p>
-  </div>
-</section>
-
-<section id="blog">
-  <div class="card">
-    <h2>Health Blog</h2>
-    <p>
-      Read health tips, disease awareness and wellness articles.
-    </p>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="card">
-    <h2>Contact Us</h2>
-    <p>Email: support@aurogi.site</p>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-wrap">
-
-    <div>
-      <h4>AUROGI</h4>
-      <p>Your trusted health & report analysis platform.</p>
-    </div>
-
-    <div>
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="#home">Home</a></li>
+<!-- REPORT -->
+<

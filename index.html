@@ -3,93 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurogi Health</title>
+<title>Aurogi – Health & Report Analysis</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:#f4f7fb;color:#333;scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f4f7fb;
+  color:#333;
+}
 
 /* HEADER */
-header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.05);position:sticky;top:0;z-index:100}
-.nav{max-width:1200px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;align-items:center}
-<div class="logo">
-  <img src="logo.png" alt="Aurogi Logo" style="height:40px;">
-</div>
-nav a{margin-left:18px;text-decoration:none;color:#444;font-weight:500}
+header{
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.nav{
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo img{
+  height:42px;
+}
+.nav a{
+  margin-left:20px;
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+}
 
 /* HERO */
-.hero{background:#fff}
-.hero-inner{max-width:1200px;margin:auto;padding:70px 20px;display:flex;align-items:center;gap:40px}
-.hero-text{flex:1}
-.hero-text h1{font-size:42px;margin-bottom:20px}
-.hero-text p{color:#666;margin-bottom:30px}
-.btn{padding:12px 25px;border-radius:4px;border:none;cursor:pointer;font-size:15px}
-.primary{background:#0d6efd;color:#fff}
-.outline{border:1px solid #0d6efd;background:#fff;color:#0d6efd;margin-left:10px}
-.hero-img img{max-width:420px;width:100%;border-radius:10px}
+.hero{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 15px;
+  display:flex;
+  align-items:center;
+  gap:40px;
+}
+.hero-text{
+  flex:1;
+}
+.hero-text h1{
+  font-size:42px;
+  margin-bottom:15px;
+}
+.hero-text p{
+  margin-bottom:25px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 22px;
+  background:#0d6efd;
+  color:#fff;
+  border-radius:6px;
+  text-decoration:none;
+}
+.btn-outline{
+  background:#fff;
+  color:#0d6efd;
+  border:2px solid #0d6efd;
+  margin-left:10px;
+}
+.hero-img{
+  flex:1;
+}
+.hero-img img{
+  width:100%;
+  border-radius:12px;
+}
 
 /* SECTIONS */
-.section{padding:70px 20px}
-.section h2{text-align:center;margin-bottom:40px;font-size:32px}
-.section p.center{text-align:center;max-width:800px;margin:0 auto 40px;color:#666}
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 15px;
+}
+.card{
+  background:#fff;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
 
-/* CARDS */
-.cards{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{background:#fff;padding:25px;border-radius:8px;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.05)}
-.card h3{margin-bottom:10px}
-
-/* REPORT */
-.report{background:#0d6efd;color:#fff}
-.report .card{background:#fff;color:#333}
-
-/* BLOG */
-.blog .card img{width:100%;border-radius:6px;margin-bottom:15px}
-
-/* CONTACT */
-.contact-box{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:8px;box-shadow:0 5px 20px rgba(0,0,0,0.05)}
-.contact-box input,.contact-box textarea{width:100%;padding:12px;margin-bottom:15px;border:1px solid #ccc;border-radius:4px}
-.contact-box button{width:100%}
-
-<footer>
-  <div style="max-width:1200px;margin:auto;display:grid;
+/* SERVICES */
+.services{
+  display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:30px;padding:40px 15px;color:#ccc;">
+  gap:20px;
+}
+.service{
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 6px 15px rgba(0,0,0,.08);
+}
 
-    <!-- BRAND -->
-    <div>
-      <h3 style="color:#fff">AUROGI</h3>
-      <p>Your trusted health & report analysis platform.</p>
-    </div>
-
-    <!-- QUICK LINKS -->
-    <div>
-      <h4 style="color:#fff">Quick Links</h4>
-      <ul style="list-style:none;padding:0">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#report-analysis">Report Analysis</a></li>
-        <li><a href="https://youtube.com" target="_blank">YouTube Channel</a></li>
-      </ul>
-    </div>
-
-    <!-- SERVICES -->
-    <div>
-      <h4 style="color:#fff">Services</h4>
-      <ul style="list-style:none;padding:0">
-        <li>Primary Care</li>
-        <li>Emergency Awareness</li>
-        <li>Health Awareness</li>
-        <li>Online Consultation</li>
-      </ul>
-    </div>
-  </div>
-
-  <div style="text-align:center;padding:15px;border-top:1px solid #333">
-    © 2026 AUROGI • All Rights Reserved
-  </div>
-</footer>footer a{
+/* FOOTER */
+footer{
+  background:#111;
+  color:#ccc;
+}
+footer a{
   color:#aaa;
   text-decoration:none;
 }
@@ -97,50 +118,106 @@ footer a:hover{
   color:#0d6efd;
 }
 
+/* MOBILE */
+@media(max-width:768px){
+  .hero{
+    flex-direction:column-reverse;
+    text-align:center;
+  }
+  .hero-text h1{
+    font-size:30px;
+  }
+  .btn-outline{
+    margin-left:0;
+    margin-top:10px;
+    display:block;
+  }
+}
+</style>
+</head>
 
-<!-- HOME -->
-<section class="hero" id="home">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <h1>Making Health Care Better Together</h1>
-      <p>Simple health guidance, report analysis and trusted medical information for everyone.</p>
-      <button class="btn primary">Make Appointment</button>
-      <button class="btn outline">View Services</button>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav">
+    <div class="logo">
+      <img src="logo.png" alt="Aurogi Logo">
     </div>
-    <div class="hero-img">
-      <img src="https://images.unsplash.com/photo-1606813909359-6b3c86c2aa87">
+    <div>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#report">Report Analysis</a>
+      <a href="#blog">Blog</a>
+      <a href="#contact">Contact</a>
     </div>
   </div>
-</section>
+</header>
+
+<!-- HERO -->
+<div class="hero" id="home">
+  <div class="hero-text">
+    <h1>Making Health Care Better Together</h1>
+    <p>
+      Understand medical reports, health conditions and preventive care
+      in simple language.
+    </p>
+
+    <!-- BUTTON UPDATED -->
+    <a href="#report" class="btn">Report Analysis</a>
+    <a href="#about" class="btn btn-outline">About Us</a>
+  </div>
+
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1606813909359-6b3c86c2aa87">
+  </div>
+</div>
 
 <!-- ABOUT -->
-<section class="section" id="about">
-  <h2>About Us</h2>
-  <p class="center">
-    Aurogi is a health information platform created to help people understand medical reports,
-    improve daily health habits and access reliable wellness guidance in simple language.
-  </p>
+<section id="about">
+  <div class="card">
+    <h2>About Aurogi</h2>
+    <p>
+      Aurogi is a digital health platform focused on medical report analysis,
+      health awareness and easy guidance for everyone.
+    </p>
+  </div>
 </section>
 
 <!-- SERVICES -->
-<section class="section" id="services">
-  <h2>Our Services</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Primary Care</h3>
-      <p>Health tips and preventive guidance.</p>
-    </div>
-    <div class="card">
-      <h3>Emergency Awareness</h3>
-      <p>Understand emergency symptoms.</p>
-    </div>
-    <div class="card">
-      <h3>Online Consultation</h3>
-      <p>Basic health guidance online.</p>
-    </div>
+<section>
+  <h2 style="margin-bottom:25px">Our Services</h2>
+  <div class="services">
+    <div class="service">Primary Care</div>
+    <div class="service">Emergency Awareness</div>
+    <div class="service">Health Awareness</div>
+    <div class="service">Online Consultation</div>
   </div>
 </section>
 
-<!-- REPORT ANALYSIS -->
-<section class="section report" id="reports">
-  <h2>Report Analysis
+<!-- REPORT -->
+<section id="report">
+  <div class="card">
+    <h2>Report Analysis</h2>
+    <p>
+      Get easy explanations of blood reports, medical tests and health
+      conditions with expert guidance.
+    </p>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="card">
+    <h2>Health Blog</h2>
+    <p>
+      Read health tips, disease awareness articles and wellness information.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="card">
+    <h2>Contact Us</h2>
+    <p>Email: support@aurogi.site

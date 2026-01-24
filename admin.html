@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin - Add Blog</title>
+  <title>Admin Panel - Add Blog</title>
   <style>
     body { font-family: Arial; padding: 20px; background:#f2f2f2; }
     input, textarea { width:100%; padding:10px; margin:10px 0; }
@@ -15,6 +15,7 @@
 <input type="text" id="title" placeholder="Blog Title">
 <textarea id="description" placeholder="Blog Description"></textarea>
 <input type="text" id="image" placeholder="Image URL">
+
 <button onclick="addBlog()">Add Blog</button>
 
 <script type="module">
@@ -22,18 +23,18 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCo9axE58FQYYbGhYpEbQAv-JxicGD_S3c",
-  authDomain: "studio-3220983334-a2b03.firebaseapp.com",
-  projectId: "studio-3220983334-a2b03",
-  storageBucket: "studio-3220983334-a2b03.appspot.com",
-  messagingSenderId: "280762476817",
-  appId: "1:280762476817:web:38e86deff774ca89f984b0"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.addBlog = async function() {
+window.addBlog = async function () {
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
   const image = document.getElementById("image").value;
@@ -42,11 +43,11 @@ window.addBlog = async function() {
     title,
     description,
     image,
-    created: new Date()
+    date: new Date()
   });
 
   alert("Blog Added!");
-}
+};
 </script>
 
 </body>

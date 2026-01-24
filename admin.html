@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Blog Panel</title>
+  <style>
+    body{font-family:Poppins;padding:20px;background:#f4f6f9}
+    input, textarea{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:6px}
+    button{background:#0d6efd;color:white;padding:10px 20px;border:none;border-radius:6px;cursor:pointer}
+    .box{max-width:600px;margin:auto;background:white;padding:20px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,.1)}
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Add Blog</h2>
+  <input type="text" id="title" placeholder="Blog Title">
+  <input type="text" id="image" placeholder="Image URL">
+  <textarea id="content" placeholder="Blog Content"></textarea>
+  <button onclick="addBlog()">Publish Blog</button>
+  <p id="msg"></p>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "PASTE-YOUR-KEY",
+  authDomain: "PASTE-YOUR-DOMAIN",
+  projectId: "PASTE-YOUR-ID",
+  storageBucket: "PASTE",
+  messagingSenderId: "PASTE",
+  appId: "PASTE"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.addBlog = async function () {
+  const title = document.getElementById("title").value;
+  const image = document.getElementById("image").value;
+  const content = document.getElementById("content").value;
+
+  if(!title || !image || !content){
+    alert("Sab fields bharo");
+    return;
+  }
+
+  await addDoc(collection(db, "blogs"), {
+    title: title,
+    image: image,
+    content: content,
+    created: new Date()
+  });
+
+  document.getElementById("msg").innerText = "Blog Added Successfully ✅";
+  document.getElementById("title").value="";
+  document.getElementById("image").value="";
+  document.getElementById("content").value="";
+}
+</script>
+
+</body>
+</html>// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCo9axE58FQYYbGhYpEbQAv-JxicGD_S3c",
+  authDomain: "studio-3220983334-a2b03.firebaseapp.com",
+  projectId: "studio-3220983334-a2b03",
+  storageBucket: "studio-3220983334-a2b03.firebasestorage.app",
+  messagingSenderId: "280762476817",
+  appId: "1:280762476817:web:38e86deff774ca89f984b0"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);

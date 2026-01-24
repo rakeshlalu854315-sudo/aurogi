@@ -48,7 +48,32 @@ nav a{margin-left:18px;text-decoration:none;color:#444;font-weight:500}
   text-align:center;
   padding:60px 20px;
 }
+.blog-section{
+    text-align:center;
+    padding:60px 20px;
+}
 
+.blog-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+    margin-top:30px;
+}
+
+.blog-card{
+    width:300px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    padding:15px;
+    text-align:left;
+    transition:0.3s;
+}
+
+.blog-card:hover{
+    transform:translateY(-5px);
+}
 .blog-container{
   display:flex;
   flex-wrap:wrap;
@@ -156,7 +181,33 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
     </div>
   </div>
 </section>
+<!-- BLOG -->
+<section id="blog" class="blog-section">
+  <h2>Health Blog</h2>
+  <p>Read simple health tips and medical guidance.</p>
 
+  <div class="blog-container">
+
+    <div class="blog-card">
+      <img src="https://images.unsplash.com/photo-1580281657521-2f78e6f6f43b">
+      <h3>Understanding Blood Test Reports</h3>
+      <p>Learn how to read CBC and other values.</p>
+    </div>
+
+    <div class="blog-card">
+      <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d">
+      <h3>Diabetes Care Guide</h3>
+      <p>Daily habits to control blood sugar.</p>
+    </div>
+
+    <div class="blog-card">
+      <img src="https://images.unsplash.com/photo-1584515933487-779824d29309">
+      <h3>Boost Your Immunity</h3>
+      <p>Simple tips for strong immunity.</p>
+    </div>
+
+  </div>
+</section>
 <!-- REPORT ANALYSIS -->
 <section class="section report" id="reports">
   <h2>Report Analysis

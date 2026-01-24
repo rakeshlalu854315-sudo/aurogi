@@ -211,37 +211,90 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
 <!-- REPORT ANALYSIS -->
 <section class="section report" id="reports">
   <h2>Report Analysis
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Aurogi Health</h1>
+    <nav>
+      <a href="#blog">Blog</a>
+      <a href="#reports">Reports</a>
+    </nav>
+  </header>
 
+  <!-- Blog Section -->
+  <section id="blog" class="blog-section">
+    <h2>Health Blog</h2>
+    <p>Read simple health tips and medical guidance.</p>
+
+    <div id="blog-container" class="blog-container">
+      <!-- Firebase se blogs yaha add honge -->
+    </div>
+  </section>
+
+  <!-- Report Section -->
+  <section id="reports" class="section report">
+    <h2>Report Analysis</h2>
+    <p>Check your health reports here.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Aurogi Health</p>
+  </footer>
+
+  <!-- Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR-KEY",
+      authDomain: "YOUR-DOMAIN",
+      projectId: "YOUR-ID",
+      storageBucket: "YOUR",
+      messagingSenderId: "YOUR",
+      appId: "YOUR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const blogContainer = document.getElementById("blog-container");
+
+    // Load blogs from Firestore
+    async function loadBlogs() {
+      const querySnapshot = await getDocs(collection(db, "blogs"));
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const blogCard = document.createElement("div");
+        blogCard.classList.add("blog-card");
+        blogCard.innerHTML = `
+          <img src="${data.image}" alt="${data.title}">
+          <h3>${data.title}</h3>
+          <p>${data.description}</p>
+        `;
+        blogContainer.appendChild(blogCard);
+      });
+    }
+
+    loadBlogs();
+  </script>
+</body>
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR-KEY",
-  authDomain: "YOUR-DOMAIN",
-  projectId: "YOUR-ID",
-  storageBucket: "YOUR",
-  messagingSenderId: "YOUR",
-  appId: "YOUR"
+  apiKey: "AIzaSyCo9axE58FQYYbGhYpEbQAv-JxicGD_S3c",
+  authDomain: "studio-3220983334-a2b03.firebaseapp.com",
+  projectId: "studio-3220983334-a2b03",
+  storageBucket: "studio-3220983334-a2b03.firebasestorage.app",
+  messagingSenderId: "280762476817",
+  appId: "1:280762476817:web:38e86deff774ca89f984b0"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const blogContainer = document.getElementById("blog-container");
-
-async function loadBlogs() {
-  const querySnapshot = await getDocs(collection(db, "blogs"));
-  querySnapshot.forEach((doc) => {
-    const blog = doc.data();
-    blogContainer.innerHTML += `
-      <div class="blog-card">
-        <img src="${blog.image}" />
-        <h3>${blog.title}</h3>
-        <p>${blog.content.substring(0,120)}...</p>
-      </div>
-    `;
-  });
-}
-
-loadBlogs();
-</script>

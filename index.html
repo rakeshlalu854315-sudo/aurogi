@@ -186,7 +186,7 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
   <h2>Health Blog</h2>
   <p>Read simple health tips and medical guidance.</p>
 
-  <div class="blog-container">
+  <div id="blog-container" class="blog-container">
 
     <div class="blog-card">
       <img src="https://images.unsplash.com/photo-1580281657521-2f78e6f6f43b">
@@ -211,3 +211,37 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
 <!-- REPORT ANALYSIS -->
 <section class="section report" id="reports">
   <h2>Report Analysis
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR-KEY",
+  authDomain: "YOUR-DOMAIN",
+  projectId: "YOUR-ID",
+  storageBucket: "YOUR",
+  messagingSenderId: "YOUR",
+  appId: "YOUR"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const blogContainer = document.getElementById("blog-container");
+
+async function loadBlogs() {
+  const querySnapshot = await getDocs(collection(db, "blogs"));
+  querySnapshot.forEach((doc) => {
+    const blog = doc.data();
+    blogContainer.innerHTML += `
+      <div class="blog-card">
+        <img src="${blog.image}" />
+        <h3>${blog.title}</h3>
+        <p>${blog.content.substring(0,120)}...</p>
+      </div>
+    `;
+  });
+}
+
+loadBlogs();
+</script>

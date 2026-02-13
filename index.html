@@ -212,6 +212,96 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
 .blog-card:hover {
   transform: translateY(-5px);
 }
+
+
+  .hero{
+  height:100vh;
+  background:url('https://img.freepik.com/premium-photo/doctor-with-hospital-background_946209-917.jpg') no-repeat center center/cover;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+/* Dark Overlay */
+.hero::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.55);
+}
+
+/* Content Layer */
+.hero-overlay{
+  position:relative;
+  color:#fff;
+  max-width:800px;
+  padding:20px;
+}
+
+.hero-text h1{
+  font-size:48px;
+  margin-bottom:20px;
+}
+
+.hero-text p{
+  font-size:18px;
+  margin-bottom:30px;
+  line-height:1.6;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:12px 25px;
+  border-radius:5px;
+  text-decoration:none;
+  font-weight:500;
+  transition:0.3s;
+}
+
+.primary{
+  background:#0d6efd;
+  color:#fff;
+}
+
+.primary:hover{
+  background:#0b5ed7;
+}
+
+.outline{
+  border:2px solid #fff;
+  color:#fff;
+}
+
+.outline:hover{
+  background:#fff;
+  color:#000;
+}
+
+/* 📱 Mobile Responsive */
+@media(max-width:768px){
+  .hero-text h1{
+    font-size:30px;
+  }
+
+  .hero-text p{
+    font-size:16px;
+  }
+
+  .hero{
+    height:85vh;
+  }
+}
 </style>
 </head>
 
@@ -242,19 +332,19 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
 
 <!-- HOME -->
 <section class="hero" id="home">
-  <div class="hero-inner">
+  <div class="hero-overlay">
     <div class="hero-text">
       <h1>Making Health Care Better Together</h1>
-      <p>Simple health guidance, report analysis and trusted medical information for everyone.</p>
-      <a href="#report" class="btn primary">Report Analysis</a>
-      <button class="btn outline">View Services</button>
-    </div>
-    <div class="hero-img">
-      <img src="https://img.freepik.com/premium-photo/doctor-with-hospital-background_946209-917.jpg">
+      <p>
+        Simple health guidance, report analysis and trusted medical information for everyone.
+      </p>
+      <div class="hero-buttons">
+        <a href="#report" class="btn primary">Report Analysis</a>
+        <a href="#services" class="btn outline">View Services</a>
+      </div>
     </div>
   </div>
 </section>
-
 
 
 <!-- SERVICES -->

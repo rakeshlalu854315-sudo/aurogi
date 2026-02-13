@@ -311,6 +311,12 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
   </footer>
 
   <!-- Firebase Script -->
+
+      <script>
+function toggleMenu(){
+  document.getElementById("nav-links").classList.toggle("active");
+}
+</script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -365,9 +371,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig); 
-    <script>
-function toggleMenu(){
-  document.getElementById("nav-links").classList.toggle("active");
-}
-</script>
+
 </body>

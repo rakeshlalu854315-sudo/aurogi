@@ -352,8 +352,38 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
   <h2>Our Services</h2>
   <div class="cards">
     <div class="card">
-      <h3>Primary Care</h3>
-      <p>Health tips and preventive guidance.</p>
+      <section class="services">
+  <h2>हमारी हेल्थ सर्विस</h2>
+  <p class="service-desc">
+    अब बनाएं अपना डिजिटल हेल्थ प्रोफाइल! 
+    अपनी जरूरी मेडिकल जानकारी सुरक्षित रखें, 
+    जिसे आप इमरजेंसी में तुरंत एक्सेस कर सकते हैं।
+  </p>
+
+  <div class="card-container">
+
+    <!-- Profile Card -->
+    <div class="card">
+      <h3>Health Profile</h3>
+      <input type="text" id="name" placeholder="नाम">
+      <input type="number" id="age" placeholder="उम्र">
+      <input type="text" id="blood" placeholder="ब्लड ग्रुप">
+      <button onclick="saveProfile()">Save</button>
+    </div>
+
+    <!-- Hidden Info -->
+    <div class="card">
+      <h3>Hidden Information</h3>
+      <input type="password" id="password" placeholder="पासवर्ड डालें">
+      <button onclick="unlock()">Unlock</button>
+
+      <div id="hiddenData" style="display:none;">
+        <p id="showData"></p>
+      </div>
+    </div>
+
+  </div>
+</section>
     </div>
     <div class="card">
       <h3>Emergency Awareness</h3>

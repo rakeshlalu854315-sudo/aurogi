@@ -358,9 +358,29 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
     <div class="card">
       <h3>your profile</h3>
   <p>Secure your health profile for emergency access.</p>
-<a href="profile.html">
-  <button>👤 Your Profile</button>
-</a>
+<h2>Create Profile</h2>
+
+<input type="text" id="name" placeholder="Enter Name"><br><br>
+<input type="text" id="occupation" placeholder="Enter Occupation"><br><br>
+<input type="text" id="mobile" placeholder="Enter Mobile"><br><br>
+
+<button onclick="saveData()">Save Profile</button>
+
+<script>
+function saveData() {
+  var name = document.getElementById("name").value;
+  var occupation = document.getElementById("occupation").value;
+  var mobile = document.getElementById("mobile").value;
+
+  localStorage.setItem("name", name);
+  localStorage.setItem("occupation", occupation);
+  localStorage.setItem("mobile", mobile);
+
+  alert("Profile Saved ✅");
+
+  window.location.href = "profile.html";
+}
+</script>
 </section>
     </div>
     <div class="card">

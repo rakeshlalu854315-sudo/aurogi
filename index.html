@@ -187,6 +187,16 @@ nav a{
 .hidden{
   display:none;
 }
+
+.account-box{max-width:520px}
+.auth-tabs{display:flex;background:#eef4ff;border-radius:8px;padding:4px;margin-bottom:15px}
+.auth-tab{flex:1;border:0;background:transparent;padding:10px;border-radius:6px;color:#0d6efd;font-weight:600;cursor:pointer}
+.auth-tab.active{background:#0d6efd;color:#fff}
+.auth-message{text-align:center;min-height:22px;font-size:14px}
+.auth-message.success{color:#198754}
+.auth-message.error{color:#c62828}
+.account-logout{margin-left:0;margin-top:10px;border-color:#0d6efd;color:#0d6efd}
+
 /* CONTACT */
 .contact-box{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:8px;box-shadow:0 5px 20px rgba(0,0,0,0.05)}
 .contact-box input,.contact-box textarea{width:100%;padding:12px;margin-bottom:15px;border:1px solid #ccc;border-radius:4px}
@@ -288,6 +298,16 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
   color:#000;
 }
 
+.card .outline{
+  border-color:#0d6efd;
+  color:#0d6efd;
+}
+
+.card .outline:hover{
+  background:#0d6efd;
+  color:#fff;
+}
+
 /* 📱 Mobile Responsive */
 @media(max-width:768px){
   .hero-text h1{
@@ -326,6 +346,8 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
       <a href="#reports">Report Analysis</a>
       <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
+      <a href="#account">Login</a>
+      <a href="profile.html">Profile</a>
     </nav>
   </div>
 </header>
@@ -349,39 +371,13 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
 
 <!-- SERVICES -->
 <section class="section" id="services">
-  <h2>our service</h2>
+  <h2>Our Services</h2>
   <div class="cards">
     <div class="card">
-  </div>
-</section>
-    </div>
-    <div class="card">
-      <h3>your profile</h3>
-  <p>Secure your health profile for emergency access.</p>
-<h2>Create Profile</h2>
-
-<input type="text" id="name" placeholder="Enter Name"><br><br>
-<input type="text" id="occupation" placeholder="Enter Occupation"><br><br>
-<input type="text" id="mobile" placeholder="Enter Mobile"><br><br>
-
-<button onclick="saveData()">Save Profile</button>
-
-<script>
-function saveData() {
-  var name = document.getElementById("name").value;
-  var occupation = document.getElementById("occupation").value;
-  var mobile = document.getElementById("mobile").value;
-
-  localStorage.setItem("name", name);
-  localStorage.setItem("occupation", occupation);
-  localStorage.setItem("mobile", mobile);
-
-  alert("Profile Saved ✅");
-
-  window.location.href = "profile.html";
-}
-</script>
-</section>
+      <h3>Your Profile</h3>
+      <p>Login karke apna profile Firebase database me secure tarike se save karein.</p>
+      <a href="#account" class="btn primary">Login / Sign Up</a>
+      <a href="profile.html" class="btn outline">Open Profile</a>
     </div>
     <div class="card">
       <h3>Emergency Awareness</h3>
@@ -391,6 +387,36 @@ function saveData() {
       <h3>Online Consultation</h3>
       <p>Basic health guidance online.</p>
     </div>
+  </div>
+</section>
+
+<!-- ACCOUNT / LOGIN -->
+<section class="section" id="account">
+  <h2>Login & Database</h2>
+  <p class="center">Yahin se account create karein, login karein aur apna health profile Firebase database me save karein.</p>
+  <div class="contact-box account-box">
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="home-login-tab" type="button">Login</button>
+      <button class="auth-tab" id="home-signup-tab" type="button">Sign Up</button>
+    </div>
+
+    <form id="home-auth-form">
+      <input class="hidden" type="text" id="home-name" placeholder="Full Name">
+      <input type="email" id="home-email" placeholder="Email" required>
+      <input type="password" id="home-password" placeholder="Password" minlength="6" required>
+      <button class="btn primary" id="home-auth-submit" type="submit">Login</button>
+      <p class="auth-message" id="home-auth-message" aria-live="polite"></p>
+    </form>
+
+    <form id="home-profile-form" class="hidden">
+      <h3>Save Health Profile</h3>
+      <input type="text" id="home-profile-name" placeholder="Name" required>
+      <input type="text" id="home-occupation" placeholder="Occupation">
+      <input type="tel" id="home-mobile" placeholder="Mobile">
+      <button class="btn primary" type="submit">Save Profile to Database</button>
+      <button class="btn outline account-logout" id="home-logout" type="button">Logout</button>
+      <p class="auth-message" id="home-profile-message" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 <!-- BLOG Edit -->
@@ -472,11 +498,115 @@ document.addEventListener("click", function(e) {
   }
 });
 </script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-</script>
-    
+<script type="module">
+import { app } from "./firebase-config.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+const homeAuth = getAuth(app);
+const homeDb = getFirestore(app);
+let homeMode = "login";
+let homeUser = null;
+
+const homeLoginTab = document.getElementById("home-login-tab");
+const homeSignupTab = document.getElementById("home-signup-tab");
+const homeName = document.getElementById("home-name");
+const homeSubmit = document.getElementById("home-auth-submit");
+const homeAuthForm = document.getElementById("home-auth-form");
+const homeProfileForm = document.getElementById("home-profile-form");
+const homeAuthMessage = document.getElementById("home-auth-message");
+const homeProfileMessage = document.getElementById("home-profile-message");
+
+function setHomeMode(nextMode) {
+  homeMode = nextMode;
+  const isSignup = homeMode === "signup";
+  homeLoginTab.classList.toggle("active", !isSignup);
+  homeSignupTab.classList.toggle("active", isSignup);
+  homeName.classList.toggle("hidden", !isSignup);
+  homeName.required = isSignup;
+  homeSubmit.textContent = isSignup ? "Create Account" : "Login";
+  homeAuthMessage.textContent = "";
+  homeAuthMessage.className = "auth-message";
+}
+
+homeLoginTab.addEventListener("click", () => setHomeMode("login"));
+homeSignupTab.addEventListener("click", () => setHomeMode("signup"));
+
+onAuthStateChanged(homeAuth, async (user) => {
+  homeUser = user;
+  homeAuthForm.classList.toggle("hidden", !!user);
+  homeProfileForm.classList.toggle("hidden", !user);
+
+  if (!user) return;
+
+  document.getElementById("home-profile-name").value = user.displayName || "";
+  const snapshot = await getDoc(doc(homeDb, "users", user.uid));
+  if (snapshot.exists()) {
+    const data = snapshot.data();
+    document.getElementById("home-profile-name").value = data.name || user.displayName || "";
+    document.getElementById("home-occupation").value = data.occupation || "";
+    document.getElementById("home-mobile").value = data.mobile || "";
+  }
+});
+
+homeAuthForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  homeSubmit.disabled = true;
+  homeAuthMessage.textContent = "Please wait...";
+  homeAuthMessage.className = "auth-message";
+
+  const email = document.getElementById("home-email").value.trim();
+  const password = document.getElementById("home-password").value;
+  const name = homeName.value.trim();
+
+  try {
+    if (homeMode === "signup") {
+      const userCredential = await createUserWithEmailAndPassword(homeAuth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
+      await setDoc(doc(homeDb, "users", userCredential.user.uid), {
+        name,
+        email,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      homeAuthMessage.textContent = "Account created ✅";
+    } else {
+      await signInWithEmailAndPassword(homeAuth, email, password);
+      homeAuthMessage.textContent = "Login successful ✅";
+    }
+    homeAuthMessage.className = "auth-message success";
+  } catch (error) {
+    homeAuthMessage.textContent = error.message.replace("Firebase: ", "");
+    homeAuthMessage.className = "auth-message error";
+  } finally {
+    homeSubmit.disabled = false;
+  }
+});
+
+homeProfileForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!homeUser) return;
+
+  const profile = {
+    name: document.getElementById("home-profile-name").value.trim(),
+    email: homeUser.email,
+    occupation: document.getElementById("home-occupation").value.trim(),
+    mobile: document.getElementById("home-mobile").value.trim(),
+    updatedAt: serverTimestamp()
+  };
+
+  try {
+    await setDoc(doc(homeDb, "users", homeUser.uid), profile, { merge: true });
+    if (profile.name) await updateProfile(homeUser, { displayName: profile.name });
+    homeProfileMessage.textContent = "Profile database me save ho gaya ✅";
+    homeProfileMessage.className = "auth-message success";
+  } catch (error) {
+    homeProfileMessage.textContent = error.message;
+    homeProfileMessage.className = "auth-message error";
+  }
+});
+
+document.getElementById("home-logout").addEventListener("click", () => signOut(homeAuth));
+</script>
 
 </body>

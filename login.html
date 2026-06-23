@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Aurogi Health</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;min-height:100vh;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:20px;color:#333}
+.auth-card{width:100%;max-width:420px;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:28px}
+h1{margin:0 0 8px;color:#0d6efd;text-align:center}.subtitle{text-align:center;color:#666;margin:0 0 24px}
+.tabs{display:flex;background:#eef4ff;border-radius:8px;padding:4px;margin-bottom:20px}.tab{flex:1;border:0;background:transparent;padding:10px;border-radius:6px;cursor:pointer;font-weight:700;color:#0d6efd}.tab.active{background:#0d6efd;color:#fff}
+label{font-weight:700;font-size:14px}input{width:100%;padding:12px;margin:8px 0 16px;border:1px solid #ccc;border-radius:8px;font-size:15px}.name-field.hidden{display:none}
+.primary-btn{width:100%;padding:12px;border:0;border-radius:8px;background:#0d6efd;color:#fff;font-size:16px;font-weight:700;cursor:pointer}.primary-btn:hover{background:#0b5ed7}
+.message{min-height:22px;text-align:center;margin:14px 0 0;font-size:14px}.message.error{color:#c62828}.message.success{color:#198754}.links{text-align:center;margin-top:18px}.links a{color:#0d6efd;text-decoration:none}
+</style>
+</head>
+<body>
+<main class="auth-card">
+  <h1>AUROGI</h1>
+  <p class="subtitle">Login ya account create karke apna health profile database me save karein.</p>
+
+  <div class="tabs" role="tablist" aria-label="Authentication mode">
+    <button class="tab active" id="loginTab" type="button">Login</button>
+    <button class="tab" id="signupTab" type="button">Sign Up</button>
+  </div>
+
+  <form id="authForm">
+    <div class="name-field hidden" id="nameField">
+      <label for="name">Full Name</label>
+      <input id="name" type="text" autocomplete="name" placeholder="Enter your name">
+    </div>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="email" placeholder="Enter email" required>
+
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Enter password" minlength="6" required>
+
+    <button class="primary-btn" id="submitBtn" type="submit">Login</button>
+    <p class="message" id="message" aria-live="polite"></p>
+  </form>
+
+  <div class="links">
+    <a href="index.html">← Back to Home</a> · <a href="profile.html">Profile</a>
+  </div>
+</main>
+
+<script type="module">
+import { app } from "./firebase-config.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+let mode = "login";
+
+const loginTab = document.getElementById("loginTab");
+const signupTab = document.getElementById("signupTab");
+const nameField = document.getElementById("nameField");
+const submitBtn = document.getElementById("submitBtn");
+const message = document.getElementById("message");
+
+function setMode(nextMode) {
+  mode = nextMode;
+  const isSignup = mode === "signup";
+  loginTab.classList.toggle("active", !isSignup);
+  signupTab.classList.toggle("active", isSignup);
+  nameField.classList.toggle("hidden", !isSignup);
+  submitBtn.textContent = isSignup ? "Create Account" : "Login";
+  message.textContent = "";
+  message.className = "message";
+}
+
+loginTab.addEventListener("click", () => setMode("login"));
+signupTab.addEventListener("click", () => setMode("signup"));
+
+document.getElementById("authForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  submitBtn.disabled = true;
+  message.textContent = "Please wait...";
+  message.className = "message";
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const name = document.getElementById("name").value.trim();
+
+  try {
+    if (mode === "signup") {
+      if (!name) throw new Error("Name required hai.");
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        name,
+        email,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      message.textContent = "Account created successfully ✅";
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+      message.textContent = "Login successful ✅";
+    }
+
+    message.className = "message success";
+    window.setTimeout(() => { window.location.href = "profile.html"; }, 700);
+  } catch (error) {
+    message.textContent = error.message.replace("Firebase: ", "");
+    message.className = "message error";
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

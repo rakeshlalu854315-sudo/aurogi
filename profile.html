@@ -1,52 +1,114 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aarogya Profile</title>
-
+<title>Aurogi Profile</title>
 <style>
-body {
-  font-family: Arial;
-  background: #f2f2f2;
-  text-align: center;
-}
-
-.card {
-  width: 90%;
-  max-width: 350px;
-  margin: 50px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f2f7ff;color:#333}.card{width:90%;max-width:430px;margin:50px auto;padding:24px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+h2{text-align:center;color:#0d6efd;margin-top:0}.status{text-align:center;color:#666}.field{margin-bottom:15px}label{display:block;font-weight:700;margin-bottom:6px}input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}button,.btn{flex:1;min-width:120px;padding:11px;border:0;border-radius:8px;background:#0d6efd;color:#fff;text-decoration:none;text-align:center;cursor:pointer}.secondary{background:#6c757d}.danger{background:#dc3545}.hidden{display:none}.message{min-height:22px;text-align:center;font-size:14px}.success{color:#198754}.error{color:#c62828}
 </style>
-
 </head>
-
 <body>
-
 <div class="card">
+  <h2>👤 Your Profile</h2>
+  <p class="status" id="authStatus">Checking login...</p>
 
-<h2>👤 Your Profile</h2>
+  <form id="profileForm" class="hidden">
+    <div class="field">
+      <label for="name">Name</label>
+      <input id="name" type="text" placeholder="Enter Name" required>
+    </div>
+    <div class="field">
+      <label for="occupation">Occupation</label>
+      <input id="occupation" type="text" placeholder="Enter Occupation">
+    </div>
+    <div class="field">
+      <label for="mobile">Mobile</label>
+      <input id="mobile" type="tel" placeholder="Enter Mobile">
+    </div>
+    <p class="message" id="message" aria-live="polite"></p>
+    <div class="actions">
+      <button type="submit">Save Profile</button>
+      <button class="danger" id="logoutBtn" type="button">Logout</button>
+      <a class="btn secondary" href="index.html">Back</a>
+    </div>
+  </form>
 
-<p><b>Name:</b> <span id="showName"></span></p>
-<p><b>Occupation:</b> <span id="showOccupation"></span></p>
-<p><b>Mobile:</b> <span id="showMobile"></span></p>
-
-<a href="index.html">
-  <button>⬅ Back</button>
-</a>
-
+  <div id="loginBox" class="hidden actions">
+    <a class="btn" href="login.html">Login / Sign Up</a>
+    <a class="btn secondary" href="index.html">Back</a>
+  </div>
 </div>
 
-<script>
-document.getElementById("showName").innerText = localStorage.getItem("name");
-document.getElementById("showOccupation").innerText = localStorage.getItem("occupation");
-document.getElementById("showMobile").innerText = localStorage.getItem("mobile");
-</script>
+<script type="module">
+import { app } from "./firebase-config.js";
+import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+const auth = getAuth(app);
+const db = getFirestore(app);
+let currentUser = null;
+
+const authStatus = document.getElementById("authStatus");
+const profileForm = document.getElementById("profileForm");
+const loginBox = document.getElementById("loginBox");
+const message = document.getElementById("message");
+const nameInput = document.getElementById("name");
+const occupationInput = document.getElementById("occupation");
+const mobileInput = document.getElementById("mobile");
+
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  if (!user) {
+    authStatus.textContent = "Profile dekhne ke liye login karein.";
+    profileForm.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+    return;
+  }
+
+  authStatus.textContent = `Logged in as ${user.email}`;
+  profileForm.classList.remove("hidden");
+  loginBox.classList.add("hidden");
+  nameInput.value = user.displayName || "";
+
+  const snapshot = await getDoc(doc(db, "users", user.uid));
+  if (snapshot.exists()) {
+    const data = snapshot.data();
+    nameInput.value = data.name || user.displayName || "";
+    occupationInput.value = data.occupation || "";
+    mobileInput.value = data.mobile || "";
+  }
+});
+
+profileForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!currentUser) return;
+
+  const profile = {
+    name: nameInput.value.trim(),
+    email: currentUser.email,
+    occupation: occupationInput.value.trim(),
+    mobile: mobileInput.value.trim(),
+    updatedAt: serverTimestamp()
+  };
+
+  try {
+    await setDoc(doc(db, "users", currentUser.uid), profile, { merge: true });
+    if (profile.name) await updateProfile(currentUser, { displayName: profile.name });
+    message.textContent = "Profile database me save ho gaya ✅";
+    message.className = "message success";
+  } catch (error) {
+    message.textContent = error.message;
+    message.className = "message error";
+  }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
+</script>
 </body>
 </html>

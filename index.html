@@ -288,6 +288,16 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
   color:#000;
 }
 
+.card .outline{
+  border-color:#0d6efd;
+  color:#0d6efd;
+}
+
+.card .outline:hover{
+  background:#0d6efd;
+  color:#fff;
+}
+
 /* 📱 Mobile Responsive */
 @media(max-width:768px){
   .hero-text h1{
@@ -326,6 +336,8 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
       <a href="#reports">Report Analysis</a>
       <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="profile.html">Profile</a>
     </nav>
   </div>
 </header>
@@ -349,39 +361,13 @@ footer{background:#111;color:#aaa;text-align:center;padding:20px;font-size:14px}
 
 <!-- SERVICES -->
 <section class="section" id="services">
-  <h2>our service</h2>
+  <h2>Our Services</h2>
   <div class="cards">
     <div class="card">
-  </div>
-</section>
-    </div>
-    <div class="card">
-      <h3>your profile</h3>
-  <p>Secure your health profile for emergency access.</p>
-<h2>Create Profile</h2>
-
-<input type="text" id="name" placeholder="Enter Name"><br><br>
-<input type="text" id="occupation" placeholder="Enter Occupation"><br><br>
-<input type="text" id="mobile" placeholder="Enter Mobile"><br><br>
-
-<button onclick="saveData()">Save Profile</button>
-
-<script>
-function saveData() {
-  var name = document.getElementById("name").value;
-  var occupation = document.getElementById("occupation").value;
-  var mobile = document.getElementById("mobile").value;
-
-  localStorage.setItem("name", name);
-  localStorage.setItem("occupation", occupation);
-  localStorage.setItem("mobile", mobile);
-
-  alert("Profile Saved ✅");
-
-  window.location.href = "profile.html";
-}
-</script>
-</section>
+      <h3>Your Profile</h3>
+      <p>Login karke apna profile Firebase database me secure tarike se save karein.</p>
+      <a href="login.html" class="btn primary">Login / Sign Up</a>
+      <a href="profile.html" class="btn outline">Open Profile</a>
     </div>
     <div class="card">
       <h3>Emergency Awareness</h3>
